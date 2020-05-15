@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script defer src="main.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Hogwarts Student List</title>
+  </head>
+  <body>
+      <center>
+      <img class="hogwartslogo" src="hogwarts-logo.png" alt="hogwarts logo">
+    <h1 class="title">Hogwarts Students</h1>
+      </center>
+      <section class="filter">
+        <button class="All" data-filter="*">All</button>
+        <button class="Ravenclaw" data-filter="Rawenclaw">Ravenclaw</button>
+        <button class="Gryffindor" data-filter="Gryffindor">Gryffindor</button>
+        <button class="Hufflepuff" data-filter="Hufflepuff">Hufflepuff</button>
+        <button class="Slytherin" data-filter="Slytherin">Slytherin</button>
+      </section>
+
+
+
+
+      <table id="students">
+      
+        <tr>
+          <thead>
+          <th>First Name</th>
+          <th>Middle Name</th>
+          <th>Last Name</th>
+          <th>House</th>
+        </thead>
+        </tr>
+    
+        <TBOdy>
+        <template class="student">
+          <tr id="sorting">
+            <th data-action="sort" data-sort-direction="asc" data-sort="name" class="first-name">First Name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="name-middle" class="middle-name">Middle Name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="name-last" class="last-name">Last Name</th>
+            <th class="house">House</th>
+          </tr>
+        </template>
+      </TBOdy>
+      </table>
+  
+
+    <div data-theme class="modal-bg hide" >
+        <div class="modal-content">
+        <img class="crest" src="" alt="" srcset="">
+          <a href="#" class="close"></a>
+          <p class="house"></p>
+          <img src="" alt="" class="modal-img">
+          <p class="first-name"></p>
+          <p class="middle-name"></p>
+          <p class="nick-name"></p>
+          <p class="last-name"></p>
+
+  </body>
+</html>

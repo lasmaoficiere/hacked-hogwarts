@@ -1,0 +1,242 @@
+@font-face {
+  font-family: "HP";
+  src: url(harry.ttf);
+}
+
+@font-face {
+  font-family: "Lumos";
+  src: url(lumos.ttf);
+  src: url("lumos.woff2") format("woff2"), url("lumos.woff") format("woff");
+}
+
+:root {
+  --bg: white;
+  --text-color: black;
+}
+
+[data-theme="Ravenclaw"] {
+  --bg: linear-gradient(110deg, #000a90 60%, #946b2d 60%);
+  --text-color: white;
+}
+.Ravenclaw {
+  background-color: #000a90;
+}
+
+[data-theme="Gryffindor"] {
+  --bg: linear-gradient(110deg, #7f0909 60%, #ffc500 60%);
+  --text-color: #ffc500;
+}
+
+.Gryffindor {
+  background-color: #7f0909;
+}
+
+[data-theme="Hufflepuff"] {
+  --bg: linear-gradient(110deg, #eee117 60%, #000000 60%);
+  --text-color: purple;
+}
+
+.Hufflepuff {
+  background-color: #000000;
+}
+
+[data-theme="Slytherin"] {
+  --bg: linear-gradient(110deg, #0d6217 60%, #aaaaaa 60%);
+  --text-color: grey;
+}
+
+.Slytherin {
+  background-color: #0d6217;
+}
+
+body {
+  background: linear-gradient(110deg, #3f4f45 50%, #333333 50%);
+}
+
+.title {
+  font-family: "HP";
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  font-size: 90px;
+  color: #dcae18;
+}
+
+.first-name,
+.middle-name,
+.last-name,
+.nick-name,
+.house {
+  font-family: "Lumos";
+  font-size: 25px;
+  text-align: left;
+  color: #a58312;
+}
+
+.modal-house {
+  font-family: "Lumos";
+  font-size: 30px;
+  text-align: center;
+  color: #a58312;
+}
+
+/*.students {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 2fr));
+}
+*/
+.hogwartslogo {
+  width: 300px;
+  margin-top: 30px;
+}
+
+.modal-bg {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 50%;
+}
+
+.modal-content {
+  background: var(--bg);
+  margin: 1rem;
+  padding: 1rem;
+  width: 60%;
+  height: 80%;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow-y: scroll;
+  border: solid black;
+}
+
+.close {
+  position: absolute;
+  right: 28px;
+  top: 24px;
+  width: 25px;
+  height: 25px;
+  opacity: 0.5;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+.close:before,
+.close:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 33px;
+  width: 2px;
+  background-color: #a58312;
+}
+
+.close:before {
+  transform: rotate(45deg);
+}
+
+.close:after {
+  transform: rotate(-45deg);
+}
+
+.crest {
+  width: 150px;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+
+.modal-img {
+  justify-content: right;
+  transform: scale(1.4);
+  position: relative;
+}
+
+.filter {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.filter button {
+  margin: 20px;
+  width: 120px;
+  height: 40px;
+  font-size: 30px;
+  font-family: "HP";
+  color: #a58312;
+  border: 2px solid #a58312;
+}
+
+.filter button:hover {
+  color: #dcae18;
+  border: 3px solid #dcae18;
+  cursor: pointer;
+}
+
+.info {
+  margin: 20px;
+  width: 120px;
+  height: 40px;
+  font-size: 30px;
+  font-family: "HP";
+  color: #a58312;
+  border: 2px solid #a58312;
+  text-align: center;
+}
+
+#students {
+  border-collapse: collapse;
+  width: 60%;
+  border: 1px solid #dddddd;
+  margin-left: 20%;
+  margin-bottom: 10%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  font-family: "HP";
+  font-size: 40px;
+}
+
+.first-name:hover {
+  cursor: pointer;
+  color: #dcae18;
+}
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+thead {
+  text-align: center;
+  color: #333333;
+  background-color: #a58312;
+}
+
+.modal-content > .house {
+  font-size: 2.9em;
+  text-align: center;
+}
+
+[data-action] {
+  cursor: pointer;
+}
+
+#sorting [data-sort-direction="asc"][data-action="sorted"]:after {
+  content: "↓";
+}
+
+#sorting [data-sort-direction="desc"][data-action="sorted"]:after {
+  content: "↑";
+}
