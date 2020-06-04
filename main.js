@@ -12,8 +12,6 @@ const Student = {
   nickName: "",
   imageName: "",
   house: "",
-  star: "☆",
-  gender: "",
 };
 
 let gryffindorAbout = 0;
@@ -141,12 +139,7 @@ function displayStudent(student) {
   clone.querySelector("[data-field=first-name]").textContent = student.firstName;
   clone.querySelector("[data-field=middle-name]").textContent = student.middleName;
   clone.querySelector("[data-field=last-name]").textContent = student.lastName;
-  clone.querySelector("[data-field=star]").textContent = student.star;
   clone.querySelector(".house").textContent = student.house;
-
-  clone.querySelector("[data-field=star]").addEventListener("click", function () {
-    toggleStar(student);
-  });
 
   const modal = document.querySelector(".modal-bg");
 
@@ -177,11 +170,6 @@ function displayStudent(student) {
   };
 
   document.querySelector("TBOdy").appendChild(clone);
-}
-
-function toggleStar(thisStar) {
-  thisStar.star = thisStar.star === "☆" ? "⭐" : "☆";
-  displayList(allStudents);
 }
 
 // FILRER FUNCTIONS
