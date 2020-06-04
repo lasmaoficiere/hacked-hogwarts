@@ -3,7 +3,7 @@
 window.addEventListener("DOMContentLoaded", start);
 
 let allStudents = [];
-let currentStudents = [];
+let displayedStudents = [];
 
 const Student = {
   fullName: "",
@@ -13,28 +13,48 @@ const Student = {
   nickName: "",
   imageName: "",
   house: "",
+  star: "☆",
   gender: "",
 };
 
+//GENERAL VARIABLES
 const gryffindorBtn = document.querySelector(".Gryffindor");
 const slytherinBtn = document.querySelector(".Slytherin");
 const hufflepuffBtn = document.querySelector(".Hufflepuff");
 const ravenclawBtn = document.querySelector(".Ravenclaw");
 const allBtn = document.querySelector(".All");
+const sortNameBtn = document.querySelector(".down");
+const sortNameBtnBack = document.querySelector(".up");
 
-const myHeading = document.querySelectorAll("#sorting > th");
+const sortLastNameBtn = document.querySelector(".down-last");
+const sortLastNameBtnBack = document.querySelector(".up-last");
+
+const sortHouseBtn = document.querySelector(".down-house");
+const sortHouseBack = document.querySelector(".up-house");
+
+const searchBtn = document.querySelector(".search");
+const searchBar = document.getElementById("searchBar");
+const searchInput = document.querySelector("#searchText");
 
 function start() {
+  //filter
   gryffindorBtn.addEventListener("click", filterGryffindor);
   slytherinBtn.addEventListener("click", filterSlytherin);
   hufflepuffBtn.addEventListener("click", filterHufflepuff);
   ravenclawBtn.addEventListener("click", filterRavenclaw);
   allBtn.addEventListener("click", loadJSON);
-  loadJSON();
 
-  myHeading.forEach((button) => {
-    button.addEventListener("click", sortButtonClick);
-  });
+  sortNameBtn.addEventListener("click", sortByName);
+  sortNameBtnBack.addEventListener("click", sortByNameBack);
+
+  sortLastNameBtn.addEventListener("click", sortByLastName);
+  sortLastNameBtnBack.addEventListener("click", sortByLastNameBack);
+
+  sortHouseBtn.addEventListener("click", sortByHouse);
+  sortHouseBack.addEventListener("click", sortByHouseBack);
+
+  searchInput.addEventListener("keyup", searchStudentsFirst);
+  loadJSON();
 }
 
 async function loadJSON() {
@@ -47,7 +67,6 @@ async function loadJSON() {
 
 function prepareObjects(jsonData) {
   allStudents = jsonData.map(prepareObject);
-  currentStudents = allStudents.filter((allStudents) => true);
   displayList(allStudents);
 }
 
@@ -112,27 +131,32 @@ function displayList(students) {
 }
 
 function displayStudent(student) {
-  console.log(student);
+  //console.log(student);
   const clone = document.querySelector("table TBOdy template.student").content.cloneNode(true);
 
-  clone.querySelector(".first-name").textContent = student.firstName;
-  clone.querySelector(".middle-name").textContent = student.middleName;
-  clone.querySelector(".last-name").textContent = student.lastName;
+  clone.querySelector("[data-field=first-name]").textContent = student.firstName;
+  clone.querySelector("[data-field=middle-name]").textContent = student.middleName;
+  clone.querySelector("[data-field=last-name]").textContent = student.lastName;
+  clone.querySelector("[data-field=star]").textContent = student.star;
   clone.querySelector(".house").textContent = student.house;
+
+  clone.querySelector("[data-field=star]").addEventListener("click", function () {
+    toggleStar(student);
+  });
 
   const modal = document.querySelector(".modal-bg");
 
-  const modalButton = clone.querySelector(".first-name");
+  const modalButton = clone.querySelector("[data-field=first-name]");
 
   modalButton.addEventListener("click", showModal);
   function showModal() {
     modal.style.display = "block";
     modal.dataset.theme = student.house;
     modal.querySelector(".crest").src = `${student.house}.png`;
-    modal.querySelector(".first-name ").textContent = `Name: ${student.firstName}`;
-    modal.querySelector(".nick-name ").textContent = `Nickname: ${student.nickName}`;
-    modal.querySelector(".middle-name ").textContent = `Middle Name: ${student.middleName}`;
-    modal.querySelector(".last-name ").textContent = `Last Name: ${student.lastName}`;
+    modal.querySelector("[data-field=first-name]").textContent = `Name: ${student.firstName}`;
+    modal.querySelector("[data-field=nick-name]").textContent = `Nickname: ${student.nickName}`;
+    modal.querySelector("[data-field=middle-name]").textContent = `Middle Name: ${student.middleName}`;
+    modal.querySelector("[data-field=last-name]").textContent = `Last Name: ${student.lastName}`;
     modal.querySelector(".house").textContent = student.house;
     modal.querySelector(".modal-img").src = `images//${student.imageName}`;
   }
@@ -149,6 +173,11 @@ function displayStudent(student) {
   };
 
   document.querySelector("TBOdy").appendChild(clone);
+}
+
+function toggleStar(thisStar) {
+  thisStar.star = thisStar.star === "☆" ? "⭐" : "☆";
+  displayList(allStudents);
 }
 
 // FILRER FUNCTIONS
@@ -201,54 +230,90 @@ function filterRavenclaw() {
   }
 }
 
-//--------------------------------------SORT
+// SORT FUNCTIONS
 
-function sortButtonClick() {
-  console.log("sortButton");
-
-  //const sort = this.dataset.sort;
-  if (this.dataset.action === "sort") {
-    clearAllSort();
-    console.log(this.dataset.action);
-    this.dataset.action = "sorted";
+function sortByName() {
+  const sortName = allStudents.sort(compareName);
+  displayList(allStudents);
+}
+function sortByNameBack() {
+  const sortNameBack = allStudents.sort(compareNameBack);
+  displayList(allStudents);
+}
+function sortByLastName() {
+  const sortLastName = allStudents.sort(compareLastName);
+  displayList(allStudents);
+}
+function sortByLastNameBack() {
+  const sortLastNameBack = allStudents.sort(compareLastNameBack);
+  displayList(allStudents);
+}
+function sortByHouse() {
+  const sortHouse = allStudents.sort(compareHouse);
+  displayList(allStudents);
+}
+function sortByHouseBack() {
+  const sortHouseBack = allStudents.sort(compareHouseBack);
+  displayList(allStudents);
+}
+function compareName(a, b) {
+  if (a.firstName > b.firstName) {
+    return -1;
+  } else if (a.firstName < b.firstName) {
+    return 1;
   } else {
-    if (this.dataset.sortDirection === "asc") {
-      this.dataset.sortDirection = "desc";
-      console.log("sortdir desc", this.dataset.sortDirection);
-    } else {
-      this.dataset.sortDirection = "asc";
-      console.log("sortdir asc", this.dataset.sortDirection);
-    }
-  }
-  mySort(this.dataset.sort, this.dataset.sortDirection);
-}
-
-function clearAllSort() {
-  console.log("clearAllSort");
-  myHeading.forEach((botton) => {
-    botton.dataset.action = "sort";
-  });
-}
-
-function mySort(sortBy, sortDirection) {
-  console.log(`mySort-, ${sortBy} sortDirection-  ${sortDirection}  `);
-  let desc = 1;
-
-  if (sortDirection === "desc") {
-    desc = -1;
-  }
-
-  currentStudents.sort(function (a, b) {
-    var x = a[sortBy];
-    var y = b[sortBy];
-    if (x < y) {
-      return -1 * desc;
-    }
-    if (x > y) {
-      return 1 * desc;
-    }
     return 0;
-  });
+  }
+}
+function compareNameBack(a, b) {
+  if (a.firstName < b.firstName) {
+    return -1;
+  } else if (a.firstName > b.firstName) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+function compareLastName(a, b) {
+  if (a.lastName < b.lastName) {
+    return 1;
+  } else if (a.lastName > b.lastName) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
+function compareLastNameBack(a, b) {
+  if (a.lastName > b.lastName) {
+    return 1;
+  } else if (a.lastName < b.lastName) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
+function compareHouse(a, b) {
+  if (a.house < b.house) {
+    return 1;
+  } else if (a.house > b.house) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
+function compareHouseBack(a, b) {
+  if (a.house > b.house) {
+    return 1;
+  } else if (a.house < b.house) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
 
-  displayList(currentStudents);
+//SEARCH
+function searchStudentsFirst() {
+  let text = document.getElementById("searchText");
+  const searchStudents = allStudents.filter((s) => s.firstName.includes(text.value));
+  displayList(searchStudents);
 }
