@@ -62,10 +62,13 @@ body {
   color: #dcae18;
 }
 
-.first-name,
-.middle-name,
-.last-name,
-.nick-name,
+[data-field] {
+  font-family: "Lumos";
+  font-size: 23px;
+  text-align: left;
+  color: #a58312;
+}
+
 .house {
   font-family: "Lumos";
   font-size: 25px;
@@ -205,7 +208,7 @@ th {
   text-align: left;
   padding: 8px;
   font-family: "HP";
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .first-name:hover {
@@ -233,10 +236,76 @@ thead {
   cursor: pointer;
 }
 
-#sorting [data-sort-direction="asc"][data-action="sorted"]:after {
+#sorting th.sortby {
+  text-decoration: underline;
+}
+
+.name-first:hover {
+  cursor: pointer;
+}
+
+[data-field="first-name"]:hover {
+  cursor: pointer;
+  color: #dcae18;
+}
+
+[data-sort-direction="asc"][data-action="sorted"]:after {
   content: "↓";
 }
 
-#sorting [data-sort-direction="desc"][data-action="sorted"]:after {
+[data-sort-direction="desc"][data-action="sorted"]:after {
   content: "↑";
+}
+
+[data-field="star"]:hover {
+  cursor: pointer;
+}
+
+input[type="text"] {
+  padding: 6px;
+  border: none;
+  margin-top: 8px;
+  font-size: 20px;
+  width: 250px;
+  border-radius: 20px;
+  font-family: "Lumos";
+  border: solid 2px #dcae18;
+}
+.search-bar {
+  position: relative;
+  margin-right: 66px;
+  margin-bottom: 30px;
+}
+
+input:focus {
+  outline: 0;
+  box-shadow: 10px 10px 85px 12px rgba(165, 131, 18, 1);
+}
+
+.heartbeat {
+  -webkit-animation: heartbeat 1.5s ease-in-out infinite both;
+  animation: heartbeat 1.5s ease-in-out infinite both;
+}
+
+.up,
+.down,
+.up-last,
+.down-last,
+.up-house,
+.down-house {
+  margin: 0px;
+  width: 140px;
+  height: 40px;
+  font-size: 20px;
+  font-family: "HP";
+  color: #a58312;
+  border: 2px solid #a58312;
+}
+
+.srt-btns {
+  margin-bottom: 20px;
+}
+
+button:focus {
+  box-shadow: 10px 10px 85px 12px rgba(165, 131, 18, 1);
 }
