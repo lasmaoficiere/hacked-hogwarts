@@ -309,3 +309,11 @@ input:focus {
 button:focus {
   box-shadow: 10px 10px 85px 12px rgba(165, 131, 18, 1);
 }
+
+#about-section {
+  font-family: "Lumos";
+  font-size: 14px;
+  color: #a58312;
+  display: inline;
+  text-align: center;
+}

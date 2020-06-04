@@ -16,6 +16,11 @@ const Student = {
   gender: "",
 };
 
+let gryffindorAbout = 0;
+let hufflepuffAbout = 0;
+let ravenclawAbout = 0;
+let slytherinAbout = 0;
+
 //GENERAL VARIABLES
 const gryffindorBtn = document.querySelector(".Gryffindor");
 const slytherinBtn = document.querySelector(".Slytherin");
@@ -64,6 +69,8 @@ async function loadJSON() {
 function prepareObjects(jsonData) {
   allStudents = jsonData.map(prepareObject);
   displayList(allStudents);
+  houseCount();
+  displayAboutNumbers();
 }
 
 function prepareObject(jsonObject) {
@@ -124,6 +131,7 @@ function prepareObject(jsonObject) {
 function displayList(students) {
   document.querySelector("TBOdy").innerHTML = "";
   students.forEach(displayStudent);
+  displayAboutNumbers();
 }
 
 function displayStudent(student) {
@@ -312,4 +320,24 @@ function searchStudents() {
   let text = document.getElementById("searchText");
   const searchStudents = allStudents.filter((s) => s.fullName.toLowerCase().includes(text.value));
   displayList(searchStudents);
+}
+
+function houseCount() {
+  allStudents.forEach((student) => {
+    student.house === "Gryffindor" ? gryffindorAbout++ : student.house === "Hufflepuff" ? hufflepuffAbout++ : student.house === "Ravenclaw" ? ravenclawAbout++ : slytherinAbout++;
+  });
+}
+
+function displayAboutNumbers() {
+  const gryAbout = document.querySelector("#gryfnumber");
+  const huffleAbout = document.querySelector("#hufflenumber");
+  const ravenAbout = document.querySelector("#ravennumber");
+  const slythAbout = document.querySelector("#slythnumber");
+  const allStudentsAbout = document.querySelector("#enrollednumber");
+
+  gryAbout.textContent = gryffindorAbout;
+  huffleAbout.textContent = hufflepuffAbout;
+  ravenAbout.textContent = ravenclawAbout;
+  slythAbout.textContent = slytherinAbout;
+  allStudentsAbout.textContent = gryffindorAbout + hufflepuffAbout + ravenclawAbout + slytherinAbout;
 }
