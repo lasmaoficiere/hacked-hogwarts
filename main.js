@@ -3,7 +3,6 @@
 window.addEventListener("DOMContentLoaded", start);
 
 let allStudents = [];
-let displayedStudents = [];
 
 const Student = {
   fullName: "",
@@ -23,17 +22,14 @@ const slytherinBtn = document.querySelector(".Slytherin");
 const hufflepuffBtn = document.querySelector(".Hufflepuff");
 const ravenclawBtn = document.querySelector(".Ravenclaw");
 const allBtn = document.querySelector(".All");
+
 const sortNameBtn = document.querySelector(".down");
 const sortNameBtnBack = document.querySelector(".up");
-
 const sortLastNameBtn = document.querySelector(".down-last");
 const sortLastNameBtnBack = document.querySelector(".up-last");
-
 const sortHouseBtn = document.querySelector(".down-house");
 const sortHouseBack = document.querySelector(".up-house");
 
-const searchBtn = document.querySelector(".search");
-const searchBar = document.getElementById("searchBar");
 const searchInput = document.querySelector("#searchText");
 
 function start() {
@@ -53,7 +49,7 @@ function start() {
   sortHouseBtn.addEventListener("click", sortByHouse);
   sortHouseBack.addEventListener("click", sortByHouseBack);
 
-  searchInput.addEventListener("keyup", searchStudentsFirst);
+  searchInput.addEventListener("keyup", searchStudents);
   loadJSON();
 }
 
@@ -312,8 +308,8 @@ function compareHouseBack(a, b) {
 }
 
 //SEARCH
-function searchStudentsFirst() {
+function searchStudents() {
   let text = document.getElementById("searchText");
-  const searchStudents = allStudents.filter((s) => s.firstName.includes(text.value));
+  const searchStudents = allStudents.filter((s) => s.fullName.toLowerCase().includes(text.value));
   displayList(searchStudents);
 }
